@@ -95,34 +95,7 @@
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
   }
 
-  .stone-3d-viewer {
-    perspective: 1000px;
-    transform-style: preserve-3d;
-  }
 
-  .stone-cube {
-    width: 200px;
-    height: 200px;
-    position: relative;
-    transform-style: preserve-3d;
-    animation: rotate3d 10s infinite linear;
-    margin: 50px auto;
-  }
-
-  .stone-face {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    opacity: 0.9;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .stone-face.front { transform: rotateY(0deg) translateZ(100px); }
-  .stone-face.back { transform: rotateY(180deg) translateZ(100px); }
-  .stone-face.right { transform: rotateY(90deg) translateZ(100px); }
-  .stone-face.left { transform: rotateY(-90deg) translateZ(100px); }
-  .stone-face.top { transform: rotateX(90deg) translateZ(100px); }
-  .stone-face.bottom { transform: rotateX(-90deg) translateZ(100px); }
 
   .gallery-item {
     transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -229,13 +202,7 @@
     }
   }
 
-  @keyframes rotate3d {
-    0% { transform: rotateX(0deg) rotateY(0deg); }
-    25% { transform: rotateX(0deg) rotateY(90deg); }
-    50% { transform: rotateX(0deg) rotateY(180deg); }
-    75% { transform: rotateX(0deg) rotateY(270deg); }
-    100% { transform: rotateX(0deg) rotateY(360deg); }
-  }
+
 
   @keyframes float {
     0%, 100% { transform: translateY(0px); }

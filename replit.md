@@ -87,8 +87,11 @@ The application is configured for deployment on Replit with the following setup:
 
 ## Changelog
 
-- June 27, 2025. Initial setup
+- June 27, 2025. Initial setup with premium stone industry website
+- June 27, 2025. Added interactive animations, gallery lightbox, enhanced hero section with particles
+- June 27, 2025. Removed 3D viewer feature, optimized for production deployment
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Production requirements: Removed 3D viewer feature, focus on smooth animations and professional appearance.
