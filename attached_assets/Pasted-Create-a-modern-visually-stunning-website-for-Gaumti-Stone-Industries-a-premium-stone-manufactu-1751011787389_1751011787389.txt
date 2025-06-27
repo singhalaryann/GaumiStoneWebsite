@@ -1,0 +1,89 @@
+Create a modern, visually stunning website for "Gaumti Stone Industries" - a premium stone manufacturing and supply business. The website should be built in Next.js with plain CSS and have a "wow factor" that immediately impresses visitors.
+Business Details:
+
+Company: Gaumti Stone Industries
+Owner: Aryan Singhal
+Phone: 8440992573
+Email: singhalaryan2618@gmail.com
+Business: Stone block manufacturing, cutting, and supply (bulk and retail)
+
+Design Requirements:
+
+Hero Section:
+
+Stunning full-screen background with high-quality stone textures
+Bold, modern typography with company name
+Animated text: "Premium Stones. Perfect Finish. Proven Quality."
+Call-to-action buttons: "View Our Collection" & "Get Quote"
+Smooth scroll animations
+
+
+Navigation:
+
+Sleek, transparent navbar that becomes solid on scroll
+Logo on left, menu items: Home, Products, Services, Gallery, About, Contact
+Mobile-responsive hamburger menu
+
+
+Products Section:
+
+Interactive grid showcasing different stone types
+Hover effects revealing stone names and brief descriptions
+Categories: Marble, Granite, Sandstone, Limestone, Decorative Stones
+Each card should have premium visual effects
+
+
+Services Section:
+
+Custom stone cutting and shaping
+Bulk supply for construction projects
+Home delivery services
+Quality testing and certification
+Use modern icons and smooth animations
+
+
+Gallery Section:
+
+Masonry-style photo grid
+Lightbox functionality for viewing full images
+Before/after project showcases
+Filter options by stone type
+
+
+About Section:
+
+Professional photo placeholder for Aryan Singhal
+Company story and expertise
+Years of experience highlight
+Quality commitment statement
+
+
+Contact Section:
+
+Contact form with validation
+Google Maps integration placeholder
+Business hours
+Multiple contact methods clearly displayed
+
+
+
+Technical Features:
+
+Fully responsive design
+Fast loading with optimized images
+Smooth scrolling and page transitions
+CSS animations and hover effects
+Modern gradient backgrounds
+Professional color scheme (earth tones, grays, whites)
+SEO-friendly structure
+
+Visual Style:
+
+Premium, luxury feel
+Clean, modern design
+Use of stone textures as design elements
+Professional photography placeholders
+Consistent spacing and typography
+Subtle shadows and depth effects
+
+Please create a complete, production-ready website with all pages, components, and styling that looks professional enough to impress potential clients and compete with top stone industry websites.
