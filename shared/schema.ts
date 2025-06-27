@@ -16,6 +16,9 @@ export const contacts = pgTable("contacts", {
 export const insertContactSchema = createInsertSchema(contacts).omit({
   id: true,
   createdAt: true,
+}).extend({
+  phone: z.string().optional().nullable(),
+  projectType: z.string().optional().nullable(),
 });
 
 export type InsertContact = z.infer<typeof insertContactSchema>;

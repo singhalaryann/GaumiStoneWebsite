@@ -85,17 +85,53 @@
     backdrop-filter: blur(10px);
   }
 
-  .product-card:hover {
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+  .product-card {
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
   }
 
+  .product-card:hover {
+    transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  }
+
+  .stone-3d-viewer {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+  }
+
+  .stone-cube {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate3d 10s infinite linear;
+    margin: 50px auto;
+  }
+
+  .stone-face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 0.9;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .stone-face.front { transform: rotateY(0deg) translateZ(100px); }
+  .stone-face.back { transform: rotateY(180deg) translateZ(100px); }
+  .stone-face.right { transform: rotateY(90deg) translateZ(100px); }
+  .stone-face.left { transform: rotateY(-90deg) translateZ(100px); }
+  .stone-face.top { transform: rotateX(90deg) translateZ(100px); }
+  .stone-face.bottom { transform: rotateX(-90deg) translateZ(100px); }
+
   .gallery-item {
-    transition: all 0.3s ease;
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-style: preserve-3d;
   }
 
   .gallery-item:hover {
-    transform: scale(1.05);
+    transform: scale(1.08) rotateY(10deg);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
   }
 
   .hero-text-animation {
@@ -112,10 +148,44 @@
     margin-bottom: 1rem;
   }
 
+  .floating-animation {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .pulse-glow {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  .shimmer-effect {
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  .parallax-bg {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
   @media (max-width: 768px) {
     .masonry {
       column-count: 2;
     }
+    
+    .stone-cube {
+      width: 150px;
+      height: 150px;
+    }
+    
+    .stone-face {
+      width: 150px;
+      height: 150px;
+    }
+    
+    .stone-face.front, .stone-face.back, .stone-face.right, .stone-face.left { transform: translateZ(75px); }
+    .stone-face.top, .stone-face.bottom { transform: translateZ(75px); }
   }
 
   @media (max-width: 480px) {
@@ -159,6 +229,53 @@
     }
   }
 
+  @keyframes rotate3d {
+    0% { transform: rotateX(0deg) rotateY(0deg); }
+    25% { transform: rotateX(0deg) rotateY(90deg); }
+    50% { transform: rotateX(0deg) rotateY(180deg); }
+    75% { transform: rotateX(0deg) rotateY(270deg); }
+    100% { transform: rotateX(0deg) rotateY(360deg); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes pulseGlow {
+    0%, 100% { 
+      box-shadow: 0 0 20px rgba(255, 165, 0, 0.5);
+    }
+    50% { 
+      box-shadow: 0 0 40px rgba(255, 165, 0, 0.8), 0 0 60px rgba(255, 165, 0, 0.3);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  @keyframes bounce3d {
+    0%, 100% { 
+      transform: translateY(0px) rotateX(0deg);
+    }
+    50% { 
+      transform: translateY(-10px) rotateX(10deg);
+    }
+  }
+
+  @keyframes ripple {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
   .animate-fade-in-up {
     animation: fadeInUp 0.8s ease-out;
   }
@@ -169,5 +286,9 @@
 
   .animate-zoom-in {
     animation: zoomIn 0.5s ease-out;
+  }
+
+  .animate-bounce-3d {
+    animation: bounce3d 2s ease-in-out infinite;
   }
 }

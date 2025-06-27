@@ -2,6 +2,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import ImageLightbox from "./ImageLightbox";
 
 const galleryItems = [
   {
@@ -71,17 +72,28 @@ const filters = [
 
 export default function GallerySection() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const filteredItems = activeFilter === "all" 
     ? galleryItems 
     : galleryItems.filter(item => item.category === activeFilter);
 
-  const openLightbox = (imageUrl: string) => {
-    window.open(imageUrl, '_blank');
+  const openLightbox = (index: number) => {
+    setCurrentImageIndex(index);
+    setLightboxOpen(true);
+  };
+
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
+  const navigateToImage = (index: number) => {
+    setCurrentImageIndex(index);
   };
 
   return (
-    <section id="gallery" className="py-20 bg-gray-50">
+    <section id="gallery" className="py-20 bg-gradient-to-br from-gray-50 to-white">
       <div className="container mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -99,17 +111,22 @@ export default function GallerySection() {
           {/* Filter Buttons */}
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             {filters.map((filter) => (
-              <Button
+              <motion.div
                 key={filter.key}
-                onClick={() => setActiveFilter(filter.key)}
-                className={`px-6 py-2 rounded-full font-semibold transition-colors duration-300 ${
-                  activeFilter === filter.key
-                    ? 'bg-[hsl(32,95%,44%)] text-white'
-                    : 'bg-white text-[hsl(20,14.3%,4.1%)] border border-[hsl(20,14.3%,4.1%)] hover:bg-[hsl(20,14.3%,4.1%)] hover:text-white'
-                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {filter.label}
-              </Button>
+                <Button
+                  onClick={() => setActiveFilter(filter.key)}
+                  className={`px-6 py-3 rounded-full font-semibold transition-all duration-500 transform ${
+                    activeFilter === filter.key
+                      ? 'bg-[hsl(32,95%,44%)] text-white shadow-lg scale-105 pulse-glow'
+                      : 'bg-white text-[hsl(20,14.3%,4.1%)] border border-[hsl(20,14.3%,4.1%)] hover:bg-[hsl(20,14.3%,4.1%)] hover:text-white hover:scale-105'
+                  }`}
+                >
+                  {filter.label}
+                </Button>
+              </motion.div>
             ))}
           </div>
         </motion.div>
@@ -118,31 +135,80 @@ export default function GallerySection() {
         <div className="masonry">
           {filteredItems.map((item, index) => (
             <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
+              key={`${activeFilter}-${item.id}`}
+              initial={{ opacity: 0, y: 30, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ 
+                duration: 0.6, 
+                delay: index * 0.1,
+                type: "spring",
+                bounce: 0.3
+              }}
               className="masonry-item"
+              layout
             >
-              <Card className="gallery-item bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer group">
+              <Card className="gallery-item bg-white rounded-xl shadow-lg overflow-hidden cursor-pointer group relative">
                 <div className="relative overflow-hidden">
                   <img 
                     src={item.image} 
                     alt={item.title}
-                    className="w-full h-auto transition-transform duration-300 group-hover:scale-105"
-                    onClick={() => openLightbox(item.image)}
+                    className="w-full h-auto transition-all duration-500 group-hover:scale-110 group-hover:brightness-110"
+                    onClick={() => openLightbox(index)}
                   />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300" />
+                  
+                  {/* Hover Overlay */}
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center"
+                    whileHover={{ opacity: 1 }}
+                  >
+                    <div className="text-white text-center p-4 transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <h4 className="font-bold text-lg mb-1">{item.title}</h4>
+                      <p className="text-sm text-gray-300">{item.description}</p>
+                      <div className="mt-3 bg-[hsl(32,95%,44%)] text-white px-4 py-2 rounded-full text-sm font-semibold inline-block">
+                        Click to expand
+                      </div>
+                    </div>
+                  </motion.div>
+                  
+                  {/* Shimmer effect on hover */}
+                  <div className="absolute inset-0 shimmer-effect opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  {/* Category badge */}
+                  <div className="absolute top-3 left-3 bg-[hsl(32,95%,44%)] text-white px-3 py-1 rounded-full text-xs font-semibold capitalize opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    {item.category}
+                  </div>
                 </div>
-                <CardContent className="p-4">
+                <CardContent className="p-4 bg-gradient-to-r from-white to-gray-50">
                   <h4 className="font-semibold text-[hsl(20,14.3%,4.1%)] mb-1">{item.title}</h4>
                   <p className="text-sm text-[hsl(215,16.3%,46.9%)]">{item.description}</p>
                 </CardContent>
+                
+                {/* Floating index indicator */}
+                <motion.div
+                  className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center text-xs font-bold text-[hsl(20,14.3%,4.1%)] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  whileHover={{ scale: 1.1 }}
+                >
+                  {index + 1}
+                </motion.div>
               </Card>
             </motion.div>
           ))}
         </div>
+
+        {/* Add some floating elements for extra visual appeal */}
+        <div className="absolute top-20 left-10 w-4 h-4 bg-[hsl(32,95%,44%)] rounded-full opacity-20 floating-animation"></div>
+        <div className="absolute top-40 right-20 w-6 h-6 bg-[hsl(158,90%,20%)] rounded-full opacity-30 floating-animation" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-32 left-1/4 w-3 h-3 bg-[hsl(32,95%,44%)] rounded-full opacity-25 floating-animation" style={{ animationDelay: '2s' }}></div>
       </div>
+
+      {/* Enhanced Lightbox */}
+      <ImageLightbox
+        images={filteredItems}
+        currentIndex={currentImageIndex}
+        isOpen={lightboxOpen}
+        onClose={closeLightbox}
+        onNavigate={navigateToImage}
+      />
     </section>
   );
 }
